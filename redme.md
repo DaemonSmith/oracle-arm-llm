@@ -187,6 +187,8 @@ curl -v http://localhost:8080/v1/models
 
 ### Oracle Cloud Specific Notes
 
+I use Tailscale, but you have to open ports and set up security on your server if you want to use it over the internet.
+
 **Networking:**
 ```bash
 # Open firewall ports for external access
@@ -205,7 +207,6 @@ sudo iptables-save | sudo tee /etc/iptables/rules.v4
 - Consider cleanup strategy for unused models
 
 **Performance:**
-- ARM Neoverse-N1 cores perform well with quantized models
 - Memory bandwidth is good for inference workloads  
 - CPU-only setup avoids GPU complexity and cost
 
@@ -237,13 +238,6 @@ docker restart llama-server
 readlink ./models/current
 ```
 
-### Automation Integration
-
-```bash
-# Use in scripts - non-interactive mode could be added:
-echo "0" | ./switch_model.sh  # Select first model
-```
-
 ## API Access
 
 Once running:
@@ -251,18 +245,6 @@ Once running:
 - **API Endpoint**: http://your-server:8080/v1
 - **Health Check**: http://your-server:8080/v1/models
 
-### OpenAI-Compatible API
-
-```bash
-# Test API directly
-curl -X POST http://localhost:8080/v1/chat/completions \
-  -H "Content-Type: application/json" \
-  -d '{
-    "model": "current",
-    "messages": [{"role": "user", "content": "Hello!"}],
-    "max_tokens": 50
-  }'
-```
 
 ## Configuration Tuning
 
@@ -298,7 +280,3 @@ tar -czf "llm-backup-$(date +%Y%m%d).tar.gz" \
   ./docker-compose.yml \
   ./switch_model.sh
 ```
-
----
-
-This setup gives you a production-ready, containerized LLM environment with seamless model switching capabilities. The root-level model storage and symlink strategy provides both performance and flexibility for experimenting with different models.
