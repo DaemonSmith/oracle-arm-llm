@@ -53,7 +53,7 @@ services:
     restart: unless-stopped
     ports:
       - "3000:8080"
-    depends_on::
+    depends_on:
       - llama-server
     environment:
       - OPENAI_API_BASE=http://llama-server:8080/v1
