@@ -87,7 +87,7 @@ docker-compose up -d
 
 - Save.
 
-### 3. Switch Models
+### 4. Switch Models
 
 ```bash
 ./switch_model.sh
