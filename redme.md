@@ -46,6 +46,7 @@ cd oracle-arm-llm
 
 # Create models directory
 mkdir models
+touch models/current
 
 # Download your GGUF models directly to the models folder
 wget -O models/phi-3-mini-4k-instruct-q4.gguf "https://huggingface.co/microsoft/Phi-3-mini-4k-instruct-gguf/resolve/main/Phi-3-mini-4k-instruct-q4.gguf"
@@ -63,6 +64,28 @@ chmod +x switch_model.sh
 ```bash
 docker-compose up -d
 ```
+
+### 3. Initial Setup
+
+1. Open Open-WebUI in your browser: 
+
+```http://<server-ip>:3000```
+
+2. Create the admin account (first run) or login.
+
+3. Go to Admin Panel → Settings → Connections (or User → Admin Panel → Settings → Connections depending on UI version).
+
+4. Click the wrench/manage icon (or "Add connection") and create a new connection:
+
+- Type: OpenAI (or "Custom OpenAI-compatible")
+
+- Name: llama-local (or any name)
+
+- Base URL: http://llama-server:8080/v1
+
+- API Key: dummy-key (Open-WebUI expects a key value but llama.cpp does not enforce it)
+
+- Save.
 
 ### 3. Switch Models
 
