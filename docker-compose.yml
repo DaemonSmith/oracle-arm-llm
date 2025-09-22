@@ -1,0 +1,66 @@
+version: "3.8"
+
+volumes:
+  open-webui-data:
+
+services:
+  llama-server:
+    image: amperecomputingai/llama.cpp:3.2.0
+    container_name: ampere-llama-server
+    restart: unless-stopped
+    volumes:
+      - ./models:/models:ro
+    ports:
+      - "8080:8080"
+    command: [
+      "-m", "/models/current",
+      "--host", "0.0.0.0",
+      "--port", "8080",
+      "-c", "4096",
+      "-t", "3",
+      "-tb", "2",
+      "-b", "256",
+      "--ubatch-size", "256",
+      "--mlock",
+      "--keep", "256",
+      "--flash-attn",
+      "--cache-type-k", "f16",
+      "--cache-type-v", "f16"
+    ]
+    deploy:
+      resources:
+        limits:
+          memory: 16G
+          cpus: '4'
+        reservations:
+          memory: 4G
+          cpus: '2'
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/v1/models"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    restart: unless-stopped
+    ports:
+      - "3000:8080"
+    depends_on::
+      - llama-server
+    environment:
+      - OPENAI_API_BASE=http://llama-server:8080/v1
+      - OPENAI_API_KEY=dummy-key
+      - HF_HUB_OFFLINE=1
+      - ENABLE_OLLAMA_API=false
+      - OLLAMA_BASE_URL=""
+      - ENABLE_OPENAI_API=true
+    volumes:
+      - open-webui-data:/app/backend/data
