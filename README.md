@@ -181,6 +181,7 @@ curl -v http://localhost:8080/v1/models
 | 70B Q4_K_M | 40GB+     | N/A       | ❌ **Too large** |
 
 **Recommended models for Oracle free tier:**
+- `Qwen/Qwen3-30B-A3B` (30B) - MOE, excellent overall performance
 - `microsoft/Phi-3-mini-4k-instruct-gguf` (3.8B) - Excellent for code
 - `bartowski/Llama-3.2-3B-Instruct-GGUF` (3B) - Good general purpose  
 - `bartowski/Mistral-7B-Instruct-v0.3-GGUF` (7B) - Best quality that fits
