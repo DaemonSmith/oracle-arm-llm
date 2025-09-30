@@ -4,7 +4,7 @@ set -euo pipefail
 # --- Enhanced Configuration ---
 MODELS_DIR="$(pwd)/models"
 SYMLINK="${MODELS_DIR}/current"
-CONTAINER_NAME="llama-server"
+CONTAINER_NAME="ampere-llama-server"
 HEALTH_URL="http://localhost:8080/v1/models"
 MAX_WAIT=120                              # Increased wait time for large models
 SLEEP=3                                   # Slightly longer between polls
