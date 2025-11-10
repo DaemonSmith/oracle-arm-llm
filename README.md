@@ -188,7 +188,7 @@ curl -v http://localhost:8080/v1/models
 
 ### Oracle Cloud Specific Notes
 
-I use Tailscale, but you have to open ports and set up security on your server if you want to use it over the internet.
+If using a VPN solution like Tailscale, you still need to configure firewall rules. For external access without a VPN, open the necessary ports:
 
 **Networking:**
 ```bash
