@@ -34,7 +34,7 @@ echo "" >> "$OUT_LOG"
 # helper: get model name (symlink-aware) - copy the function you already use or minimal version:
 get_model_name() {
   local base="${ENDPOINT_BASE:-http://localhost:8080}"
-  local models_dir="${MODELS_DIR:-/home/ubuntu/ai/models}"
+  local models_dir="${MODELS_DIR:-./models}"
   local container="${CONTAINER_NAME:-llama-server}"
   local api_json api_id resolved realpath reply model_from_model
 
